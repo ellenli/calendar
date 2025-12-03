@@ -150,7 +150,7 @@ p {
   position: absolute;
   top: 0;
   left: 0;
-  margin: 5em 2em;
+  margin: 4.5em 2em;
   width: calc(100% - 6em);
   background: #333;
   color: #eee;
@@ -167,12 +167,14 @@ p {
   color: inherit;
 }
 </style>
+<script async src="https://cdn.seline.com/seline.js" data-token="c2f4463c668e7be"></script>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="f698a641-b61c-434b-be84-74492fc3b326"></script>
 </head>
 <body>
 <div id="info">
 <p>👋 Hello!</p>
 <p>If you print this page, you’ll get a nifty calendar that displays the year’s dates on a single page. It will automatically fit on a single sheet of paper of any size. For best results, adjust your print settings to landscape orientation and disable the header and footer.</p>
-<p>Take in the year all at once. Fold it up and carry it with you. Jot down your notes on it. Plan things out and observe the passage of time. Above all else, be kind to others.</p>
+<p>Take in the year all at once. Tape it on your wall. Fold it up and carry it with you. Jot your notes on it. Plan things out and observe the passage of time. Above all else, be kind to others.</p>
 <?php
 if(isset($_REQUEST['layout']) && $_REQUEST['layout'] == 'aligned-weekdays') {
   // Currently using aligned-weekdays, offer to revert
@@ -216,7 +218,7 @@ $year_link = '?' . http_build_query($query_params);
   $no_habits_params = $_GET;
   $no_habits_params['habits'] = 'false';
   $no_habits_link = '?' . http_build_query($no_habits_params);
-  echo '<p>Mark off habits as you go. Happy tracking! <a href="' . htmlspecialchars($no_habits_link) . '">Click here</a> to remove the habits.</p>';
+  echo '<p>Mark habits off as you go. Happy tracking!</p><p><a href="' . htmlspecialchars($no_habits_link) . '">Click here</a> to remove the habits.</p>';
 }
 
 else { 
@@ -406,24 +408,22 @@ else {
     const habitValues = Array.from(habitInputs)
       .map(input => input.value.trim());
     
-    // Ensure we have enough habit spans
-    ensureHabitSpans();
-    
     // Get all labels containers (one per calendar cell)
     const labelsContainers = document.querySelectorAll('.labels');
     
     labelsContainers.forEach(container => {
-      const habitSpans = container.querySelectorAll('.habit');
+      const habitSpans = Array.from(container.querySelectorAll('.habit'));
+      const numFields = habitValues.length;
       
       // Update existing habit spans - render all, even if empty (for left-alignment)
       habitSpans.forEach((span, index) => {
-        if (index < habitValues.length) {
+        if (index < numFields) {
+          // Field exists (even if empty) - keep span visible
           span.textContent = habitValues[index];
           span.style.display = 'inline-block';
         } else {
-          // Keep empty spans rendered but empty to maintain alignment
-          span.textContent = '';
-          span.style.display = 'inline-block';
+          // Field was deleted - remove the span entirely
+          span.remove();
         }
       });
     });
