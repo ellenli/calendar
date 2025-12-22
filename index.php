@@ -228,7 +228,7 @@ else {
   echo '<p>Want habit tracking? <a href="' . htmlspecialchars($habits_link) . '">Here you go!</a></p>';
 } ?>
 
-<p style="font-size: 100%; color: #999;">Made by <a href="https://ellen.li">Ellen</a> &#183; Based on <a href="https://neatnik.net/calendar">Neatnik's Calendar</a></p>
+<p style="font-size: 100%; color: #999;">By <a href="https://ellen.li">Ellen</a> &#183; Based on <a href="https://neatnik.net/calendar">Neatnik's Calendar</a></p>
 </div>
 <?php
 date_default_timezone_set('UTC');
